@@ -1,25 +1,14 @@
-;org 100h
-
-;mov AH, 02h      ; Wybierz funkcję 02h - Wyświetl znak
-;mov DL, [string+2] ; Wczytaj pierwszy znak z ciągu znaków
-;int 21h
-
-;mov AH, 00h      ; Zakończ program
-;int 21h
-
-;string db "KOCHAM ASEMBLERA$"
-
-
 org 100h
-mov AH, 0Ah
-mov DX, string 
-int 21h 		;| wczytanie string
 
-mov AH, 02h
-mov DL, [string+4]
-int 21h				;| wydruk trzeciej literki
-
-mov AH, 00h
+mov AH, 0Ah       ; Funkcja 0Ah - Wczytaj łańcuch znaków
+mov DX, buffer    ; Adres, pod który zostanie wczytany łańcuch
 int 21h
 
-string db 10h
+mov AL, [buffer+2] ; Wczytaj trzecią literę (indeks 2) do AL
+mov AH, 0Eh       ; Funkcja 0Eh - Wyświetl znak z AL
+int 10h
+
+mov AH, 4Ch       ; Zakończ program
+int 21h
+
+buffer db 10       ; Bufor na wczytany łańcuch, wartość 0 wskazuje na jego zakończenie
